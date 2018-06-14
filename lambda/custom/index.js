@@ -2,6 +2,7 @@
 /* eslint-disable  no-console */
 
 const Alexa = require('ask-sdk-core');
+const request = require('request');
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
@@ -23,7 +24,32 @@ const TicketSeverityCountIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'TicketSeverityCountIntent';
   },
   handle(handlerInput) {
-    const speechText = 'TicketSeverityCountIntent';
+    let speechText = 'TicketSeverityCountIntent';
+
+    request({
+      url: "https://dev31103.service-now.com/api/now/table/incident?sysparm_limit=1",
+      method: "GET",
+      json: true,
+      body: {
+          "maxResults": 50
+      },
+      headers: {
+          "Authorization": "Basic " + (new Buffer("admin:R@mesh123456" )).toString("base64"),
+          "Accept": "application/json"
+      }
+  }, (error, res, body) => {
+      if (error) {
+          console.log('Error ' + error);
+          speechText = 'Received error response from Jira';
+          this.response.speak(speechText);
+          this.emit(':responseReady');
+      } else {
+        
+        console.log('body ' + res.result);
+        console.log('body ' + body.result);
+                     
+      }
+  });   
 
     return handlerInput.responseBuilder
       .speak(speechText)
