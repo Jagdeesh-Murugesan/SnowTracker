@@ -8,27 +8,67 @@ const LaunchRequestHandler = {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
   },
   handle(handlerInput) {
-    const speechText = 'Welcome to the Alexa Skills Kit, you can say hello!';
+    const speechText = 'Welcome to Snow Tracker Skill.';
 
     return handlerInput.responseBuilder
       .speak(speechText)
-      .reprompt(speechText)
-      .withSimpleCard('Hello World', speechText)
+      .reprompt(speechText)      
       .getResponse();
   },
 };
 
-const HelloWorldIntentHandler = {
+const TicketSeverityCountIntentHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'HelloWorldIntent';
+      && handlerInput.requestEnvelope.request.intent.name === 'TicketSeverityCountIntent';
   },
   handle(handlerInput) {
-    const speechText = 'Hello World!';
+    const speechText = 'TicketSeverityCountIntent';
 
     return handlerInput.responseBuilder
       .speak(speechText)
-      .withSimpleCard('Hello World', speechText)
+      .getResponse();
+  },
+};
+
+const TicketPortfolioCountIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'TicketPortfolioCountIntent';
+  },
+  handle(handlerInput) {
+    const speechText = 'TicketPortfolioCountIntent';
+
+    return handlerInput.responseBuilder
+      .speak(speechText)
+      .getResponse();
+  },
+};
+
+const TicketVendorCountIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'TicketVendorCountIntent';
+  },
+  handle(handlerInput) {
+    const speechText = 'TicketVendorCountIntent';
+
+    return handlerInput.responseBuilder
+      .speak(speechText)
+      .getResponse();
+  },
+};
+
+const TicketAppCountIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'TicketAppCountIntent';
+  },
+  handle(handlerInput) {
+    const speechText = 'TicketAppCountIntent';
+
+    return handlerInput.responseBuilder
+      .speak(speechText)
       .getResponse();
   },
 };
@@ -39,12 +79,11 @@ const HelpIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
   },
   handle(handlerInput) {
-    const speechText = 'You can say hello to me!';
+    const speechText = 'You can ask summary of ticket counts by Severity or Vendor or Portfolio etc.';
 
     return handlerInput.responseBuilder
       .speak(speechText)
-      .reprompt(speechText)
-      .withSimpleCard('Hello World', speechText)
+      .reprompt(speechText)      
       .getResponse();
   },
 };
@@ -59,8 +98,7 @@ const CancelAndStopIntentHandler = {
     const speechText = 'Goodbye!';
 
     return handlerInput.responseBuilder
-      .speak(speechText)
-      .withSimpleCard('Hello World', speechText)
+      .speak(speechText)      
       .getResponse();
   },
 };
@@ -95,7 +133,10 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestHandler,
-    HelloWorldIntentHandler,
+    TicketSeverityCountIntentHandler,
+    TicketPortfolioCountIntentHandler,
+    TicketVendorCountIntentHandler,
+    TicketAppCountIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,
     SessionEndedRequestHandler

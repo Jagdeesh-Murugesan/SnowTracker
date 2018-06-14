@@ -1,0 +1,12 @@
+1. Summary of ticket count by severity wise
+	E.g 5 - P1, 5 - P2 , 10 - P3 etc
+
+2. Summary of ticket count by severity wise / portfolios
+	Under Claims 1 P1,15 P2 , 3- P3 etc
+	Under Provider 1 P1,15 P2 , 3- P3 etc
+
+3. Summary of ticket assignment / vendor ( assignment group)
+	E.g 20 tickets under Accenture queue
+
+4. Summary of ticket count by application wise
+	E.g 20 tickets under pre adjudication

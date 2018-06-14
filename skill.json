@@ -9,7 +9,7 @@
             "Alexa tell hello world hello",
             "Alexa ask hello world say hello"
           ],
-          "name": "SnowSkill2",
+          "name": "SnowSkill",
           "description": "Sample Full Description"
         }
       },

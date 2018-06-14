@@ -1,7 +1,7 @@
 {
   "deploy_settings": {
     "Ramesh": {
-      "skill_id": "",
+      "skill_id": "amzn1.ask.skill.d1b6b2a2-4d60-4d66-af86-49920c688754",
       "was_cloned": false,
       "merge": {
         "manifest": {
@@ -13,7 +13,8 @@
             }
           }
         }
-      }
+      },
+      "in_skill_products": []
     }
   }
 }

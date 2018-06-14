@@ -1,7 +1,7 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "greeter",
+      "invocationName": "snow tracker",
       "types": [
 
       ],
@@ -25,16 +25,49 @@
           ]
         },
         {
-          "name": "HelloWorldIntent",
+          "name": "TicketSeverityCountIntent",
           "slots": [
 
           ],
           "samples": [
-            "hello",
-            "say hello",
-            "say hello world"
+            "Summary of ticket count by severity wise",
+            "Details of ticket count by severity wise",
+            "Ticket count by severity wise"
           ]
-        }
+        },
+        {
+          "name": "TicketPortfolioCountIntent",
+          "slots": [
+
+          ],
+          "samples": [
+            "Summary of ticket count by portfolio",
+            "Details of ticket count by portfolio",
+            "Ticket count by portfolio"
+          ]
+        },
+        {
+          "name": "TicketVendorCountIntent",
+          "slots": [
+
+          ],
+          "samples": [
+            "Summary of ticket count by vendor",
+            "Details of ticket count by vendor",
+            "Ticket count by vendor"            
+          ]
+        },
+        {
+          "name": "TicketAppCountIntent",
+          "slots": [
+
+          ],
+          "samples": [
+            "Summary of application wise ticket count",
+            "Details of ticket count application wise",
+            "Ticket count application wise"            
+          ]
+        }        
       ]
     }
   }
