@@ -3,6 +3,7 @@
 
 const Alexa = require('ask-sdk-core');
 const request = require('request');
+const config = require('./config');
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
@@ -34,7 +35,7 @@ const TicketSeverityCountIntentHandler = {
           "maxResults": 50
       },
       headers: {
-          "Authorization": "Basic " + (new Buffer("admin:R@mesh123456" )).toString("base64"),
+          "Authorization": "Basic " + (new Buffer(config.username + ":" + config.password )).toString("base64"),
           "Accept": "application/json"
       }
   }, (error, res, body) => {
