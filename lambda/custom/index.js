@@ -14,7 +14,7 @@ const LaunchRequestHandler = {
 
     return handlerInput.responseBuilder
       .speak(speechText)
-      .reprompt(speechText)      
+      .reprompt(speechText)
       .getResponse();
   },
 };
@@ -28,29 +28,32 @@ const TicketSeverityCountIntentHandler = {
     let speechText = 'TicketSeverityCountIntent';
 
     request({
-      url: "https://dev31103.service-now.com/api/now/table/incident?sysparm_limit=1",
+      url: "https://dev52396.service-now.com/api/now/table/incident?sysparm_limit=1",
       method: "GET",
       json: true,
-      body: {
-          "maxResults": 50
-      },
       headers: {
-          "Authorization": "Basic " + (new Buffer(config.username + ":" + config.password )).toString("base64"),
-          "Accept": "application/json"
+        "Authorization": "Basic " + (new Buffer(config.username + ":" + config.password)).toString("base64"),
+        "Accept": "application/json"
       }
-  }, (error, res, body) => {
+    }, (error, response, result) => {
       if (error) {
-          console.log('Error ' + error);
-          speechText = 'Received error response from Jira';
-          this.response.speak(speechText);
-          this.emit(':responseReady');
+        console.log('Error ' + error);
+        speechText = 'Received error response from Jira';
+        this.response.speak(speechText);
+        this.emit(':responseReady');
       } else {
-        
-        console.log('body ' + res.result);
-        console.log('body ' + body.result);
-                     
+          try {
+            for (let i in result) {
+              console.log(result[i].number);
+            }
+            console.log(JSON.stringify(result));
+            console.log('bdy1 ' + result.number);            
+          }
+          catch (err) {
+            console.log(err);
+          }
       }
-  });   
+    });
 
     return handlerInput.responseBuilder
       .speak(speechText)
@@ -110,7 +113,7 @@ const HelpIntentHandler = {
 
     return handlerInput.responseBuilder
       .speak(speechText)
-      .reprompt(speechText)      
+      .reprompt(speechText)
       .getResponse();
   },
 };
@@ -125,7 +128,7 @@ const CancelAndStopIntentHandler = {
     const speechText = 'Goodbye!';
 
     return handlerInput.responseBuilder
-      .speak(speechText)      
+      .speak(speechText)
       .getResponse();
   },
 };
@@ -159,14 +162,14 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 
 exports.handler = skillBuilder
   .addRequestHandlers(
-    LaunchRequestHandler,
-    TicketSeverityCountIntentHandler,
-    TicketPortfolioCountIntentHandler,
-    TicketVendorCountIntentHandler,
-    TicketAppCountIntentHandler,
-    HelpIntentHandler,
-    CancelAndStopIntentHandler,
-    SessionEndedRequestHandler
+  LaunchRequestHandler,
+  TicketSeverityCountIntentHandler,
+  TicketPortfolioCountIntentHandler,
+  TicketVendorCountIntentHandler,
+  TicketAppCountIntentHandler,
+  HelpIntentHandler,
+  CancelAndStopIntentHandler,
+  SessionEndedRequestHandler
   )
   .addErrorHandlers(ErrorHandler)
   .lambda();
