@@ -2,7 +2,7 @@
 /* eslint-disable  no-console */
 
 const Alexa = require('ask-sdk-core');
-const request = require('request');
+const snowRestClient = require('./modules/snowHelper');
 const config = require('./config');
 
 const LaunchRequestHandler = {
@@ -24,35 +24,33 @@ const TicketSeverityCountIntentHandler = {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
       && handlerInput.requestEnvelope.request.intent.name === 'TicketSeverityCountIntent';
   },
-  handle(handlerInput) {
+  
+  async handle(handlerInput) {
     let speechText = 'TicketSeverityCountIntent';
+    let activeCnt = 0;
+    let urgencyHiCnt = 0;
+    let urgencyMedCnt = 0;
+    let urgencyLowCnt = 0;
 
-    request({
-      url: "https://dev52396.service-now.com/api/now/table/incident?sysparm_limit=1",
-      method: "GET",
-      json: true,
-      headers: {
-        "Authorization": "Basic " + (new Buffer(config.username + ":" + config.password)).toString("base64"),
-        "Accept": "application/json"
-      }
-    }, (error, response, result) => {
-      if (error) {
-        console.log('Error ' + error);
-        speechText = 'Received error response from Jira';
-        this.response.speak(speechText);
-        this.emit(':responseReady');
-      } else {
-          try {
-            for (let i in result) {
-              console.log(result[i].number);
-            }
-            console.log(JSON.stringify(result));
-            console.log('bdy1 ' + result.number);            
+    await snowRestClient.getTicketCountByUrgency().then(function(response){
+        
+        activeCnt = response.result.length;
+        response.result.forEach(e => {
+          if(e.urgency == 1){
+            urgencyHiCnt++;
           }
-          catch (err) {
-            console.log(err);
+          else if(e.urgency == 2){
+            urgencyMedCnt++;
           }
-      }
+          else{
+            urgencyLowCnt++;
+          }
+        });
+        speechText = `There are ${activeCnt} open tickets, out of which ${urgencyHiCnt} are High urgency, 
+        ${urgencyMedCnt} are medium urgency and ${urgencyLowCnt} are low urgency`;
+
+    },function(err){
+      console.log(" Err occured "+err);
     });
 
     return handlerInput.responseBuilder
